@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block side %}
+    <div class="sidebar" data-background-color="" data-active-color="danger">
+        <div class="logo">
+            <a href="{% url 'major:index' %}" class="simple-text">
+                管 理 平 台
+            </a>
+        </div>
+        <div class="logo logo-mini"><a href="#" class="simple-text">C</a></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav first-nav">
+                <li class="active">
+                    <a href="{% url 'major:index' %}">
+                        <i class="ti-panel"></i>
+                        <p>我的首页</p>
+                    </a>
+                </li>
+                {% if '管理员模块' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#charts" class="collapsed" aria-expanded="false">
+                        <i class="ti-bar-chart-alt"></i>
+                        <p>管理员管理
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="charts" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'userapp:mdfuser' 1 %}">修改管理员</a></li>
+                            <li><a href="{% url 'userapp:adduser' 1 %}">增加管理员</a></li>
+                            <li><a href="{% url 'userapp:loginrec' 1 %}">登录记录</a></li>
+                            <li><a href="{% url 'userapp:group' 1 %}">权限组管理</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '信息查询' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#ui-elements" class="collapsed" aria-expanded="false">
+                        <i class="ti-package"></i>
+                        <p>信息查询
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="ui-elements" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'major:search' %}">查询信息</a></li>
+                            <li><a href="{% url 'major:batchHandle' %}">批量处理</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '上传数据包' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#forms" class="collapsed" aria-expanded="false">
+                        <i class="ti-clipboard"></i>
+                        <p>上传数据包
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse in" id="forms" role="navigation" aria-expanded="true" style="height: 60px;">
+                        <ul class="nav">
+                            <li class="active"><a href="{% url 'major:uploadData' %}">上传数据</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '信息管理' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#tables" class="collapsed" aria-expanded="false">
+                        <i class="ti-view-list-alt"></i>
+                        <p>信息管理
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="tables" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'major:typemanage' 1 %}">彩金类型管理</a></li>
+                            <li><a href="{% url 'userapp:adulog' %}">管理员派发记录</a></li>
+                            <li><a href="{% url 'major:downloadinfo' %}">下载信息</a></li>
+                            <li><a href="{% url 'major:uploadrecord' 1 %}">上传记录</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock side %}
+{% block body %}
+    <div class="content">
+            <div class="container-fluid">
+                <div id="uploadData" class="row wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <em class="updatepw_icon"></em>
+                                        上传信息
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <form name="uploadform" class="content-box form-ajax form-horizontal" enctype="multipart/form-data" action="" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                               数据包备注名：
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="msg" id="msg" class="form-control"  required="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                CSV数据包：
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="file" class="form-control" name="myfile" id="csvdata">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-5 col-md-4">
+                                                <button type="submit" class="btn subBtnstl" id="btnUpdateLoginPWD" onclick="dosubmit()">导入数据</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <h3 style="color: #dd4b39">{{ errmsg }}</h3>
+                                    <iframe name='hidden_frame' id="hidden_frame" style="display:none"></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+{% endblock body %}
+
+{% block foot %}
+    <script >
+        function dosubmit(){
+            var btnSubmit = document.getElementById("btnUpdateLoginPWD");
+            btnSubmit.disabled = "true";
+            document.uploadform.submit();
+        }
+    </script>
+
+{% endblock %}

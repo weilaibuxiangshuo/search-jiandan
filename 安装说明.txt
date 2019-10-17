@@ -1,0 +1,21 @@
+装好  nginx    mysql   python3.6.8  
+创建虚拟环境 进入虚拟环境 进入项目目录 安装项目依赖  pip install –r req.txt
+创建 数据库payout
+配置setting文件  数据库名和密码
+迁移数据库生成表  python manage.py migrate
+初始化数据:  进入mysql 后use payout再执行项目根目录 major_adminpermission.sql文件里的命令
+配置好uwsgi
+配置好nginx
+启动
+
+
+
+为防止上传文件超时,超大需要配置 nginx:
+加入如下配置:
+keepalive_timeout 1600;
+client_max_body_size 1024m;
+uwsgi_read_timeout 1000;
+
+
+需在手动创建超级管理员，才能登陆
+python manage.py createsuperuser  

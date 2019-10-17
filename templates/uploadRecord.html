@@ -1,0 +1,239 @@
+﻿{% extends 'base.html' %}
+{% block side %}
+    <div class="sidebar" data-background-color="" data-active-color="danger">
+        <div class="logo">
+            <a href="{% url 'major:index' %}" class="simple-text">
+                管 理 平 台
+            </a>
+        </div>
+        <div class="logo logo-mini"><a href="#" class="simple-text">C</a></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav first-nav">
+                <li class="active">
+                    <a href="{% url 'major:index' %}">
+                        <i class="ti-panel"></i>
+                        <p>我的首页</p>
+                    </a>
+                </li>
+                {% if '管理员模块' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#charts" class="collapsed" aria-expanded="false">
+                        <i class="ti-bar-chart-alt"></i>
+                        <p>管理员管理
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="charts" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'userapp:mdfuser' 1 %}">修改管理员</a></li>
+                            <li><a href="{% url 'userapp:adduser' 1 %}">增加管理员</a></li>
+                            <li><a href="{% url 'userapp:loginrec' 1 %}">登录记录</a></li>
+                            <li><a href="{% url 'userapp:group' 1 %}">权限组管理</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '信息查询' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#ui-elements" class="collapsed" aria-expanded="false">
+                        <i class="ti-package"></i>
+                        <p>信息查询
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="ui-elements" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'major:search' %}">查询信息</a></li>
+                            <li><a href="{% url 'major:batchHandle' %}">批量处理</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '上传数据包' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#forms" class="collapsed" aria-expanded="false">
+                        <i class="ti-clipboard"></i>
+                        <p>上传数据包
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="forms" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'major:uploadData' %}">上传数据</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '信息管理' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#tables" class="collapsed" aria-expanded="false">
+                        <i class="ti-view-list-alt"></i>
+                        <p>信息管理
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse in" id="tables" role="navigation" aria-expanded="true" style="height: 240px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'major:typemanage' 1 %}">彩金类型管理</a></li>
+                            <li><a href="{% url 'userapp:adulog' %}">管理员派发记录</a></li>
+                            <li><a href="{% url 'major:downloadinfo' %}">下载信息</a></li>
+                            <li class="active"><a href="{% url 'major:uploadrecord' 1 %}">上传记录</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock side %}
+{% block body %}
+    <div class="content">
+            <div class="container-fluid">
+                <div id="uploadRecord" class="row wrapper wrapper-content">
+
+                    <div class="row tablelist">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <em class="list_icon"></em>
+                                        上传记录
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+                                {% csrf_token %}
+                                    <form class="form-search" action="{% url 'major:searchupload' 1%}" method="get">
+
+                                        <div class="am-col col-lg-4" style=" float: right">
+                                            <div class="am-input-group">
+                                                <span class="am-input-group-btn" id="search-btn">
+                                                    <button class="am-btn am-btn-default" type="submit" id="search-bt">搜 索</button>
+                                                    <i class="search-icon"></i>
+                                                </span>
+                                                <input type="text" class="am-form-field" name="searchword">
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% if pageobjs %}
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>上传时间</th>
+                                                    <th>数据包别称</th>
+                                                    <th>上传文件名</th>
+                                                    <th>导入成功数量</th>
+                                                    <th>上传者</th>
+                                                    <th>删除者</th>
+                                                    <th>是否删除</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for obj in pageobjs %}
+                                                <tr>
+                                                    <td>{{ obj.id }}</td>
+                                                    <td>{{ obj.create_time }}</td>
+                                                    <td>{{ obj.dataname }}</td>
+                                                    <td>{{ obj.filename }}</td>
+                                                    <td>{{ obj.number }}</td>
+                                                    <td>{{ obj.bywho }}</td>
+                                                    <td>{{ obj.del_person }}</td>
+                                                    {% if obj.is_delete %}
+                                                        <td>已删除</td>
+                                                    {% else %}
+                                                        <td><a href="javascript:void(0);" class="deldata btn subBtnstl" pk="{{ obj.id  }}">删除</a></td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="span12" id="dPager">
+                                        <div class="pager">
+                                            <ul>
+                                                {% if pageobjs.has_previous %}
+                                                    <li><a class="prev" href="{% url 'major:uploadrecord' pageobjs.previous_page_number %}">上一页</a></li>
+                                                {% endif %}
+
+                                                {% for pindex in pages %}
+                                                    {% if pindex == pageobjs.number %}
+                                                        <li><span class="current">{{ pindex }}</span></li>
+                                                    {% else %}
+                                                        <li><a href="{% url 'major:uploadrecord' pindex %}">{{ pindex }}</a></li>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if pageobjs.has_next %}
+                                                    <li><a class="next" href="{% url 'major:uploadrecord' pageobjs.next_page_number %}">下一页</a></li>
+                                                {% endif %}
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+
+                                    <h3 style="color: #dd4b39">{{ msg }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock body %}
+
+{% block foot %}
+    <script>
+        $('.deldata').click(function () {
+            var msg = confirm("确定删除吗");
+            if (msg == true){
+                var pk = $(this).attr('pk');
+                $.ajax({
+                    url:"{% url 'major:deletedata'%}",
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        pk:pk,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    success:function (data) {
+                        alert(data.msg);
+                        location.reload();
+                    }
+                });
+            }
+        });
+        /*
+        $('#search-bt').click(function () {
+            var searchword = $('#searchword').val();
+            if (!searchword){
+                alert('请输入搜索内容');
+                return false
+            }
+
+            $.ajax({
+{#                    url:"{% url 'major:searchupload'%}",#}
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        searchword:searchword,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    success:function (data) {
+                        alert(data.msg);
+                        location.reload();
+                    }
+                });
+
+        })
+        */
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,510 @@
+{% extends 'base.html' %}
+{% block side %}
+    <div class="sidebar" data-background-color="" data-active-color="danger">
+        <div class="logo">
+            <a href="{% url 'major:index' %}" class="simple-text">
+                管 理 平 台
+            </a>
+        </div>
+        <div class="logo logo-mini"><a href="#" class="simple-text">C</a></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav first-nav">
+                <li class="active">
+                    <a href="{% url 'major:index' %}">
+                        <i class="ti-panel"></i>
+                        <p>我的首页</p>
+                    </a>
+                </li>
+
+                {% if '管理员模块' in pms %}
+                    <li>
+                        <a data-toggle="collapse" href="#charts" class="collapsed" aria-expanded="false">
+                            <i class="ti-bar-chart-alt"></i>
+                            <p>管理员管理
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="charts" role="navigation" aria-expanded="false" style="height: 0px;">
+                            <ul class="nav">
+                                <li><a href="{% url 'userapp:mdfuser' 1 %}">修改管理员</a></li>
+                                <li><a href="{% url 'userapp:adduser' 1 %}">增加管理员</a></li>
+                                <li><a href="{% url 'userapp:loginrec' 1 %}">登录记录</a></li>
+                                <li><a href="{% url 'userapp:group' 1 %}">权限组管理</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                {% if '信息查询' in pms %}
+                    <li>
+                        <a data-toggle="collapse" href="#ui-elements" class="collapsed" aria-expanded="false">
+                            <i class="ti-package"></i>
+                            <p>信息查询
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse in" id="ui-elements" role="navigation" aria-expanded="true"
+                             style="height: 60px;">
+                            <ul class="nav">
+                                <li><a href="{% url 'major:search' %}">查询信息</a></li>
+                                <li class="active"><a href="{% url 'major:batchHandle' %}">批量处理</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="collapse in" id="ui-elements" role="navigation" aria-expanded="true"
+                             style="height: 60px;">
+                            <ul class="nav">
+                                <li class="active"><a href="{% url 'major:batchHandle' %}">批量处理</a></li>
+                            </ul>
+                        </div>
+
+                    </li>
+                {% endif %}
+                {% if '上传数据包' in pms %}
+                    <li>
+                        <a data-toggle="collapse" href="#forms" class="collapsed" aria-expanded="false">
+                            <i class="ti-clipboard"></i>
+                            <p>上传数据包
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="forms" role="navigation" aria-expanded="false" style="height: 0px;">
+                            <ul class="nav">
+                                <li><a href="{% url 'major:uploadData' %}">上传数据</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                {% if '信息管理' in pms %}
+                    <li>
+                        <a data-toggle="collapse" href="#tables" class="collapsed" aria-expanded="false">
+                            <i class="ti-view-list-alt"></i>
+                            <p>信息管理
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="tables" role="navigation" aria-expanded="false" style="height: 0px;">
+                            <ul class="nav">
+                                <li><a href="{% url 'major:typemanage' 1 %}">彩金类型管理</a></li>
+                                <li><a href="{% url 'userapp:adulog' %}">管理员派发记录</a></li>
+                                <li><a href="{% url 'major:downloadinfo' %}">下载信息</a></li>
+                                <li><a href="{% url 'major:uploadrecord' 1 %}">上传记录</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock side %}
+{% block body %}
+    <div class="content">
+
+        <div class="container-fluid">
+            <div id="msgSearch" class="row wrapper wrapper-content">
+
+                <form class="row" action="{% url 'major:batchSearch' %}" method="post">
+                    {% csrf_token %}
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <em class="updatepw_icon"></em>
+                                    查询信息
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="content-box form-ajax form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">
+                                            信息内容：
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="searchWord" id="msg" class="form-control"
+                                                   required="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">
+                                            类型：
+                                        </label>
+                                        <div class="col-md-9">
+                                            <select id="searchcode" name="searchCode" class="form-control">
+                                                {#                                                    <option value="0">--请选择--</option>#}
+                                                <option value="1102">电话</option>
+                                                <option value="1101">姓名</option> 
+                                                <option value="1103">QQ</option>
+                                                <option value="1104">Email</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-5 col-md-4">
+                                            <button type="submit" class="btn subBtnstl" id="btnUpdateLoginPWD"> &nbsp;查
+                                                &nbsp; &nbsp;询&nbsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <h3 style="color: #dd4b39">{{ msg }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row tablelist">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <em class="list_icon"></em>
+                                    信息管理
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="button" class="deliverybtn btn subBtnstl allBtn"
+                                        id="batchSend"
+                                        style="background-color:grey; width: 80px;padding: 0;position: absolute; left: 32px; top: 80px;">
+                                    批量派送
+                                </button>
+                            </div>
+
+                            <div class="panel-body">
+
+                                <div class="table-responsive" style="margin-top: 44px;">
+                                    <table class="table table-bordered" style="text-align: center">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" ng-model="selectAll" ng-change="changeAll()"/> 全选
+                                            </th>
+
+                                            <th style="text-align: center">上传时间</th>
+                                            <th style="text-align: center">姓名</th>
+                                            <th style="text-align: center">派送彩金</th>
+                                            <th style="text-align: center">奖金类型</th>
+                                            <th style="text-align: center">QQ</th>
+                                            <th style="text-align: center">电话号码</th>
+                                            <th style="text-align: center">电子邮箱</th>
+                                            <th style="text-align: center">是否派送</th>
+                                            <th style="text-align: center">派送时间</th>
+                                            <th style="text-align: center">派送</th>
+                                            <th style="text-align: center; padding:0;width: 80px">增加派送</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for obj in query_obj_list %}
+                                            <tr class="check">
+                                                <td><input class="checkB"
+                                                           type="checkbox" ng-model="row.checked"
+                                                           ng-click="changeCurrent(row, $event)"/></td>
+                                                <td>{{ obj.create_time }}</td>
+                                                <td pid="{{ obj.id }}">{{ obj.name }}</td>
+                                                <td class="money">
+                                                    {% if obj.state == 1 %}
+                                                        {{ obj.money }}
+                                                    {% else %}
+                                                        <input style="width: 76px" type="text" name="money"
+                                                               value="{{ obj.money }}"/>
+                                                    {% endif %}
+
+                                                </td>
+                                                <td>
+                                                    {% if obj.state == 1 %}
+                                                        {{ obj.lotteryclass }}
+                                                    {% else %}
+                                                        <select name="type" lay-verify="">
+                                                            <!--<option value="">请选择类型</option>-->
+                                                            {% for foo in typeobj %}
+                                                                <option value="{{ foo.id }}">{{ foo.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    {% endif %}
+
+                                                </td>
+                                                <td>{{ obj.qq }}</td>
+                                                <td>{{ obj.tel }}</td>
+                                                <td>{{ obj.email }}</td>
+                                                {% if obj.state %}
+                                                    <td style="color: #00B83F">已派送</td>
+                                                {% else %}
+                                                    <td style="color: #dd4b39">未派送</td>
+                                                {% endif %}
+                                                <td>
+                                                    {% if obj.send_time %}
+                                                        {{ obj.send_time }}
+                                                    {% endif %}
+                                                </td>
+                                                {% if obj.operator or obj.state %}
+                                                    <td>{{ obj.operator }}</td>
+                                                {% else %}
+                                                    <td>
+                                                        <button type="button" class="deliverybtn btn subBtnstl send-btn"
+                                                                pid="{{ obj.id }}"
+                                                                style="background-color:grey;width: 80px; padding-top: 0;">派送
+                                                        </button>
+                                                    </td>
+                                                {% endif %}
+
+                                                <td>
+                                                    <span style="width: 80px; padding-left: 12px" class="addsend btn subBtnstl"
+                                                          pid="{{ obj.id }}" dataname="{{ obj.tagname }}">增加派送</span>
+                                                </td>
+
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <!--2
+                                <div class="span12" id="dPager">
+
+                                    <div class="pager span6">
+                                        {% if pageobjs.has_previous %}
+                                            <li><a class="prev"
+                                                   href="{% url 'major:searchinfo' pageobjs.previous_page_number %}
+                                    ?searchWord={{ searchWord }}&searchCode={{ searchCode }}">上一页</a>
+                                            </li>
+                                        {% endif %}
+                                        {% for pindex in pages %}
+                                            {% if pindex == pageobjs.number %}
+                                                <li><span class="current">{{ pindex }}</span></li>
+                                            {% else %}
+                                                <li><a href="{% url 'major:searchinfo' pindex %}?searchWord=
+                                    {{ searchWord }}&searchCode={{ searchCode }}">{{ pindex }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if pageobjs.has_next %}
+                                            <li><a class="next"
+                                                   href="{% url 'major:searchinfo' pageobjs.next_page_number %}
+                                    ?searchWord={{ searchWord }}&searchCode={{ searchCode }}">下一页</a>
+                                            </li>
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        {# 弹出框 #}
+        <div class="modal fade" id="send-form" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             style="background-color: rgba(0,0,0,0.3)">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content " id="bgc">
+                    <div class="modal-header" style="text-align: center;">
+                        <h2 class="modal-title" id="createFileTitle">添加派送彩金</h2>
+                        <button type="button" class="close" id="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" style=" width: 20px;height: 20px;">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group tanchukuang">
+                            <div>姓名：<span id="username"></span></div>
+                            <div>派送彩金：<input type="text" id="AddSendMoney"></div>
+                            <div>类型：
+                                <select name="type" id="sendtype">
+                                    <option value="">请选择类型</option>
+                                    {% for foo in typeobj %}
+                                        <option value="{{ foo.id }}">{{ foo.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>QQ：<span id="qqnum"></span></div>
+                            <div>电话号码：<span id="telnum"></span></div>
+                            <div>电子邮箱：<span id="emailname"></span></div>
+                            <div>所属上传包：<span id="data-name"></span>(用于删除)</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="submit-send" userid=""
+                                style="background-color:blue; color: #FFFFFF">确定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
+
+{% block foot %}
+    <script>
+        $(function () {
+            checkBox();
+            function checkBox() {
+                var $thr = $("table thead tr"); //表格头部的tr
+                var $checkAllTh = $("table thead tr").find('input').parent(); //表格头部的的全选按钮
+                var $tbr = $("table tbody tr"); //表格内容的tr
+                var $checkAll = $thr.find('input'); //表格头部的全选框
+                //全选
+                $checkAll.click(function (event) {
+                    //根据表格头部（thead）的全选框的是否选中的状态（true或false）来设置表格内容（tbody）的选择框状态
+                    $tbr.find('input').prop('checked', $(this).prop('checked'));
+                    //防止点击事件向父元素冒泡    必须加阻止事件冒泡，不然会出现单击全选框按钮无作用的情况
+                    event.stopPropagation();
+                });
+                //点击表格头部全选框所在的单元格时也触发全选框的点击操作
+                $checkAllTh.click(function () {
+                    $(this).find('input').click();
+                });
+                //点击表格内容（tbody）下面的每一行的选择框
+                $tbr.find('input').click(function (event) {
+                    //判断tbody里面的已经选中的input长度和表格内容本有的input长度是有相等，如果相等，则把theard的选择框置为选中，
+                    $checkAll.prop('checked', $tbr.find('input:checked').length == $tbr.find('input').length ? true : false);
+                    event.stopPropagation(); //防止点击事件向父元素冒泡    必须加阻止事件冒泡，不然会出现单击每一行内容的选框按钮无作用的情况
+                });
+                //点击tbody下面的每一行（非选择框）也能触发选择框的点击操作
+                $tbr.click(function () {
+                    $(this).find('input').click();
+                });
+            }
+
+            // 派送事件
+            $(document).on('click', '.send-btn', function send() {
+                var btn = $(this);
+                var amount = btn.parent().siblings().eq(3).children().val();
+                var lotterytypes = btn.parent().siblings().eq(4).children().val();
+                var pid = btn.attr("pid");
+                if (amount == 0.00 || !amount) {
+                    alert('请输入金额');
+                    return false
+                }
+                if (!lotterytypes) {
+                    alert('请选择彩金类型');
+                    return false
+                }
+                $.ajax({
+                    url: '{% url "major:send" %}',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        pid: pid,
+                        amount: amount,
+                        lotterytypes: lotterytypes,
+                        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
+                    },
+                    success: function (result) {
+                        if (result.stat == 1) {
+                            location.reload();
+                        } else {
+                            alert(data.msg)
+                        }
+                    }
+                });
+            });
+
+            // 添加派送弹框
+            $('.addsend').click(function () {
+                // 给提交按钮添加id属性
+                var thistd = $(this);
+                var pid = thistd.attr('pid');
+                $('#submit-send').attr('userid', pid);
+                // 数据包名字
+                var dataname = thistd.attr('dataname');
+                // 把页面的数据转移到弹窗表单相关数据
+                var username = thistd.parent().siblings().eq(2).text();
+                var qqnum = thistd.parent().siblings().eq(5).text();
+                var telnum = thistd.parent().siblings().eq(6).text();
+                var emailname = thistd.parent().siblings().eq(7).text();
+
+                $('#data-name').text(dataname);
+                $('#username').text(username);
+                $('#qqnum').text(qqnum);
+                $('#telnum').text(telnum);
+                $('#emailname').text(emailname);
+                $('#send-form').modal('show');
+            });
+
+            // 派送,关闭弹框， 获取输入值，然后执行逻辑
+            $("#submit-send").click(function () {
+                var pid = $(this).attr('userid');
+                var dataname = $('#data-name').text();
+                var username = $('#username').text();
+                var qqnum = $('#qqnum').text();
+                var telnum = $('#telnum').text();
+                var emailname = $('#emailname').text();
+                var amount = $('#AddSendMoney').val();
+                var sendtype = $('#sendtype').val();
+                if (!amount || !sendtype) {
+                    alert('请输入金额和选择彩金类型');
+                    return false
+                }
+                $.ajax({
+                    url: '{% url 'major:addsend' %}',
+                    dataType: 'json',
+                    type: 'post',
+                    data: {
+                        pid: pid,
+                        dataname: dataname,
+                        username: username,
+                        qqnum: qqnum,
+                        telnum: telnum,
+                        emailname: emailname,
+                        amount: amount,
+                        sendtype: sendtype,
+                        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
+                    },
+                    success: function (data) {
+                        if (data.status === 0) {
+
+                            alert('派送成功');
+                            location.reload();
+                        } else {
+                            alert(data.msg)
+                        }
+                    }
+                });
+            });
+
+
+            // 批量发送
+            $("#batchSend").click(function () {
+                var data_info = [];
+                $.each($('tr.check'), function () {
+                    if($(this).children('td').eq(0).children('input').is(':checked')){
+                        if($(this).children('td').eq(8).text()==='未派送'){
+                             var money = $(this).children('td').eq(3).children('input').val();
+                             var pid = $(this).children('td').eq(2).attr('pid');
+                             var typeid = $(this).children('td').eq(4).children().val();
+                             var data = {"pid":pid, "money":money, "typeid":typeid};
+                             data_info.push(data);
+                        }
+                    }
+                });
+
+
+                $.ajax({
+                    url:"{% url 'major:batchSend' %}",
+                    type:'post',
+                    dataType:'json',
+                    data:{
+                        selected_data:JSON.stringify(data_info),
+                        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
+                    },
+                    success: function (data) {
+                        alert(data.msg);
+                        if (data.code == 200) {
+                            location.reload();
+                        }
+                    }
+                })
+
+            })
+        });
+
+
+    </script>
+{% endblock %}

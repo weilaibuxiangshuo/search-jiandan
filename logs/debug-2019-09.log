@@ -1,0 +1,1632 @@
+[2019-09-29 12:33:38,499] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `django_migrations` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `app` varchar(255) NOT NULL, `name` varchar(255) NOT NULL, `applied` datetime(6) NOT NULL); (params None)
+[2019-09-29 12:33:39,037] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `django_content_type` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(100) NOT NULL, `app_label` varchar(100) NOT NULL, `model` varchar(100) NOT NULL); (params None)
+[2019-09-29 12:33:39,556] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `django_content_type` ADD CONSTRAINT `django_content_type_app_label_model_76bd3d3b_uniq` UNIQUE (`app_label`, `model`); (params ())
+[2019-09-29 12:33:40,113] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `django_content_type` MODIFY `name` varchar(100) NULL; (params [])
+[2019-09-29 12:33:40,971] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `django_content_type` DROP COLUMN `name`; (params ())
+[2019-09-29 12:33:43,508] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `auth_permission` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(50) NOT NULL, `content_type_id` integer NOT NULL, `codename` varchar(100) NOT NULL); (params None)
+[2019-09-29 12:33:57,405] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `auth_group` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(80) NOT NULL UNIQUE); (params None)
+[2019-09-29 12:34:09,401] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `auth_group_permissions` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `group_id` integer NOT NULL, `permission_id` integer NOT NULL); (params None)
+[2019-09-29 12:34:22,548] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `auth_permission` ADD CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`); (params ())
+[2019-09-29 12:34:58,875] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `auth_permission` ADD CONSTRAINT `auth_permission_content_type_id_codename_01ab375a_uniq` UNIQUE (`content_type_id`, `codename`); (params ())
+[2019-09-29 12:35:18,433] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `auth_group_permissions` ADD CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`); (params ())
+[2019-09-29 12:35:57,241] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `auth_group_permissions` ADD CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`); (params ())
+[2019-09-29 12:36:41,070] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `auth_group_permissions` ADD CONSTRAINT `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` UNIQUE (`group_id`, `permission_id`); (params ())
+[2019-09-29 12:37:08,995] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `auth_permission` MODIFY `name` varchar(255) NOT NULL; (params [])
+[2019-09-29 12:38:21,801] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `userapp_user` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `password` varchar(128) NOT NULL, `last_login` datetime(6) NULL, `is_superuser` bool NOT NULL, `username` varchar(150) NOT NULL UNIQUE, `first_name` varchar(30) NOT NULL, `last_name` varchar(30) NOT NULL, `email` varchar(254) NOT NULL, `is_staff` bool NOT NULL, `is_active` bool NOT NULL, `date_joined` datetime(6) NOT NULL); (params None)
+[2019-09-29 12:38:39,110] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `userapp_user_groups` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `user_id` integer NOT NULL, `group_id` integer NOT NULL); (params None)
+[2019-09-29 12:38:51,620] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `userapp_user_user_permissions` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `user_id` integer NOT NULL, `permission_id` integer NOT NULL); (params None)
+[2019-09-29 12:39:10,899] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `userapp_admingroup` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(15) NOT NULL); (params None)
+[2019-09-29 12:39:28,957] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `userapp_admingroup_group_user` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `admingroup_id` integer NOT NULL, `user_id` integer NOT NULL); (params None)
+[2019-09-29 12:39:47,098] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `userapp_adminpermission` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(15) NOT NULL); (params None)
+[2019-09-29 12:40:05,994] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `userapp_admingroup_permission` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `admingroup_id` integer NOT NULL, `adminpermission_id` integer NOT NULL); (params None)
+[2019-09-29 12:40:24,072] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_user_groups` ADD CONSTRAINT `userapp_user_groups_user_id_1f2cef9b_fk_userapp_user_id` FOREIGN KEY (`user_id`) REFERENCES `userapp_user` (`id`); (params ())
+[2019-09-29 12:40:43,469] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_user_groups` ADD CONSTRAINT `userapp_user_groups_group_id_2c7413e1_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`); (params ())
+[2019-09-29 12:40:44,790] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_user_groups` ADD CONSTRAINT `userapp_user_groups_user_id_group_id_809fade4_uniq` UNIQUE (`user_id`, `group_id`); (params ())
+[2019-09-29 12:40:45,387] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_user_user_permissions` ADD CONSTRAINT `userapp_user_user_pe_user_id_83c73166_fk_userapp_u` FOREIGN KEY (`user_id`) REFERENCES `userapp_user` (`id`); (params ())
+[2019-09-29 12:40:47,334] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_user_user_permissions` ADD CONSTRAINT `userapp_user_user_pe_permission_id_d925323f_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`); (params ())
+[2019-09-29 12:40:48,872] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_user_user_permissions` ADD CONSTRAINT `userapp_user_user_permis_user_id_permission_id_2e646fa8_uniq` UNIQUE (`user_id`, `permission_id`); (params ())
+[2019-09-29 12:40:50,174] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_admingroup_group_user` ADD CONSTRAINT `userapp_admingroup_g_admingroup_id_b1594545_fk_userapp_a` FOREIGN KEY (`admingroup_id`) REFERENCES `userapp_admingroup` (`id`); (params ())
+[2019-09-29 12:40:51,944] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_admingroup_group_user` ADD CONSTRAINT `userapp_admingroup_g_user_id_49041951_fk_userapp_u` FOREIGN KEY (`user_id`) REFERENCES `userapp_user` (`id`); (params ())
+[2019-09-29 12:40:53,358] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_admingroup_group_user` ADD CONSTRAINT `userapp_admingroup_group_admingroup_id_user_id_f58e69d9_uniq` UNIQUE (`admingroup_id`, `user_id`); (params ())
+[2019-09-29 12:40:53,938] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_admingroup_permission` ADD CONSTRAINT `userapp_admingroup_p_admingroup_id_ae840689_fk_userapp_a` FOREIGN KEY (`admingroup_id`) REFERENCES `userapp_admingroup` (`id`); (params ())
+[2019-09-29 12:40:55,031] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_admingroup_permission` ADD CONSTRAINT `userapp_admingroup_p_adminpermission_id_06971520_fk_userapp_a` FOREIGN KEY (`adminpermission_id`) REFERENCES `userapp_adminpermission` (`id`); (params ())
+[2019-09-29 12:40:56,245] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `userapp_admingroup_permission` ADD CONSTRAINT `userapp_admingroup_permi_admingroup_id_adminpermi_480eb513_uniq` UNIQUE (`admingroup_id`, `adminpermission_id`); (params ())
+[2019-09-29 12:40:57,117] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `django_admin_log` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `action_time` datetime(6) NOT NULL, `object_id` longtext NULL, `object_repr` varchar(200) NOT NULL, `action_flag` smallint UNSIGNED NOT NULL, `change_message` longtext NOT NULL, `content_type_id` integer NULL, `user_id` integer NOT NULL); (params None)
+[2019-09-29 12:40:57,721] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `django_admin_log` ADD CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`); (params ())
+[2019-09-29 12:40:58,853] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `django_admin_log` ADD CONSTRAINT `django_admin_log_user_id_c564eba6_fk_userapp_user_id` FOREIGN KEY (`user_id`) REFERENCES `userapp_user` (`id`); (params ())
+[2019-09-29 12:41:00,226] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `django_admin_log` ALTER COLUMN `action_time` SET DEFAULT %s; (params ['2019-09-29 12:41:00.226384'])
+[2019-09-29 12:41:00,424] [schema.py:110] [schema:execute] [DEBUG]- ALTER TABLE `django_admin_log` ALTER COLUMN `action_time` DROP DEFAULT; (params ())
+[2019-09-29 12:41:00,663] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `major_loginrecord` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(35) NOT NULL, `create_time` datetime(6) NOT NULL, `state` bool NOT NULL, `ip` char(39) NOT NULL); (params None)
+[2019-09-29 12:41:01,200] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `major_lotteryclass` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(35) NOT NULL); (params None)
+[2019-09-29 12:41:01,750] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `major_record` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(35) NOT NULL, `money` numeric(10, 2) NOT NULL, `qq` varchar(15) NOT NULL, `tel` varchar(15) NOT NULL, `email` varchar(25) NOT NULL, `state` bool NOT NULL, `tagname` varchar(50) NOT NULL, `create_time` datetime(6) NOT NULL, `send_time` datetime(6) NULL, `operator` varchar(35) NULL, `lotteryclass` varchar(35) NOT NULL); (params None)
+[2019-09-29 12:41:02,304] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `major_upload` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `dataname` varchar(50) NOT NULL UNIQUE, `create_time` datetime(6) NOT NULL, `filename` varchar(50) NOT NULL UNIQUE, `number` integer NULL, `is_delete` bool NOT NULL, `bywho` varchar(35) NOT NULL, `del_person` varchar(35) NOT NULL); (params None)
+[2019-09-29 12:41:03,140] [schema.py:110] [schema:execute] [DEBUG]- CREATE INDEX `major_record_tel_321ceee4` ON `major_record` (`tel`); (params ())
+[2019-09-29 12:41:03,739] [schema.py:110] [schema:execute] [DEBUG]- CREATE TABLE `django_session` (`session_key` varchar(40) NOT NULL PRIMARY KEY, `session_data` longtext NOT NULL, `expire_date` datetime(6) NOT NULL); (params None)
+[2019-09-29 12:41:04,271] [schema.py:110] [schema:execute] [DEBUG]- CREATE INDEX `django_session_expire_date_a5c62663` ON `django_session` (`expire_date`); (params ())
+[2019-09-29 12:52:22,206] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: '1UJtJJvUDBpqXrFu65dvCgvhFCvKY0t2sFZFXDLBQZRrhcsVOCyx1jPYWYrxIxKD'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f57c2e9d8>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56a0fcc0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f57c38240>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 12:54:29,231] [base.py:152] [base:get_response] [WARNING]- Not Found: /favicon.ico
+[2019-09-29 12:54:29,388] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'GPD0NTBvq4P1EPbgGxsPDikAeHBkDM17vEP8daSlh83sdF9j5ZqRthrG9J87SbFd'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f57c2ea60>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56a0f940>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f57c2bcc0>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 12:54:37,381] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-29 12:54:38,288] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-29 12:54:39,685] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'h86mN30Lkx9X53BJdgZRJBVtxVMceC9jCyWG52l1kgEc2brTCW2BlQ45lTbXcyby'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f569d2488>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f569d5438>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f569d5240>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 12:54:41,036] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'B3pLW1I4TxwY6cPlAVvrSa09nGnRrCh0Wtf5e03kTg1d3kFvZBybup9LbEMCpyjf'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f57c2ebf8>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56a22978>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56a22860>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 12:54:54,404] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-29 12:54:58,345] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-29 12:55:15,443] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'uRtk6xahll5Kc2LVc7XQ0ZvBLO7xSv14P6iPnqeY6ObnTbyAxSMQaDTQHzM0RyUA'>, 'request': <WSGIRequest: GET '/user/login?next=/major/index'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f569a08c8>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56944ba8>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56944978>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 12:56:44,051] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'mTZUMnkM8D8CbtgjOK3jgKp1n8f3buEcLSFwPnSzYREgMP3qm4DrHfkizeXsG89h'>, 'request': <WSGIRequest: GET '/user/login?next=/user/mdfuser/1'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f56946a60>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56953320>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56944ef0>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 12:56:52,403] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'TLtbmIL1kZmqw53utS0Fv9pa8PeJqH59kwJnAC1IxnOrQQQVbplHUcJRpbawaemK'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f5b1a02f0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f569069b0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56900780>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 12:56:58,387] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'FHURafuXXICV7QeZzY2tTSE5Ow5kMKdK59aQ9EUPCiZf9lxnlvGvYDuy6NIDwmxz'>, 'request': <WSGIRequest: GET '/user/login?next=/user/group/1'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f56915b70>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568f8da0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568f8eb8>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 12:58:57,929] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'Aoy72hwQhHIFBooRfj10lpGRK3eqq5TXG7tue9VOILvjloIj2HUf4DnL9r9L6oRs'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f5699abf8>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568fcc50>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56965828>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 13:25:39,898] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: '7q0Ef4nlrS7uMseT9INTynn4CSWO2RaKSpEtVdSSxHTAyLSs2CkCC1QZHJgMk4va'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f56915b70>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568cfc50>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568c06d8>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 14:03:00,151] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: '0pqJpw5o5dXA3vclE9r6LGfNA4KLq5t1vXAudp0O5tO6jHCqaC0xOVjQeXA0e14C'>, 'request': <WSGIRequest: GET '/user/login?next=/major/index'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f5b1a02f0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56839a20>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568a80f0>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 14:03:04,161] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'odrBsYlqAjtPFrFlKEbRt92Kkzm2hNiL6a0YRYCYlzqsybOKwtTISGOUElq2ZvLJ'>, 'request': <WSGIRequest: GET '/user/login?next=/major/uploadData'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f5b1a02f0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568bbf60>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56906b70>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 17:19:09,337] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'ozhFV4KEUXKAI2z0k32GeKc8ksPbIMmgHAYivFzWjgNqsdUWTLQhuiKSVQMEVUA3'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f56915d90>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568d2208>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568d2518>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 17:19:13,530] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'LZdwWDnHdjDMuFxn3UtmrYR003RwhdD55krVGwZVbEuUgk6s3QmP88J1A3kNjegy'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f56915ea0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568d2978>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568d2470>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 18:11:57,636] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'keAkRL4MC7zzb3dRscYhqhGh84heMU18ueKPvZXxSToslA4iWUi4vQm0HLCGeyNJ'>, 'request': <WSGIRequest: GET '/user/login?next=/user/group/1'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f568df6a8>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568dcb70>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568dc710>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 19:09:03,634] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'qyZfBYUVw0QHbhcwz5TYRJLxJHHj7zGUErVJnEEjOIWcYO2M8Khal9Zi87IqqP2U'>, 'request': <WSGIRequest: GET '/user/login?next=/user/mdfuser/1'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f56915f28>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568d2c50>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568d2a90>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 19:16:16,753] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'sWiJ5wd3Bvcg3snf75QjjuW0ZSUdd1FDMPFDKfvuig5ApUrZ9KRA473061DkPbKF'>, 'request': <WSGIRequest: GET '/user/login?next=/major/index'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f5b194e18>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568c6198>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568c1f60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 19:17:09,567] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'tWcaoC2Zj2ePDwesO1HHDGFKfZEJxZ4SSLTAlG1O42FCguUypWj7gRXZZT06vt2J'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f568dff28>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568e50b8>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568e5400>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 19:26:59,012] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'SCtxFeCzUIByOKrs8BsIpqlvYpkNqBP0neOf15JYMlKVWqynM8KBWWsngN1JAk1e'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f568d70d0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568d91d0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568d2f98>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-29 19:27:05,618] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'JVfu8izjRRAarOgmHZlt2SGpLbEU9GOwexAcu9GIJuJxzunhlwDmzoNh3zlQjp0K'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f569a08c8>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56840128>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56839ef0>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-09-30 22:46:08,135] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:08,151] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:08,268] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:08,272] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:08,300] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:08,376] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:14,580] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:14,585] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:14,619] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:14,633] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:46:14,703] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-09-30 22:57:01,535] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-10-04 07:09:39,967] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-10-04 16:12:46,075] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'hS4QglnM5L5rdQJZWjOIPN42F6NOXTwrATLtQWc4u48hX14Vv1Cj5lCMguKha1Ke'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f568ec158>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568ba438>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568e5cc0>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-10-04 16:15:14,148] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'9Or0PLpHVdx9NJnHM1A9P6EfV3G5LkE9kxYhOTshaH5M8TCKfBmlhz6JVbPVtxpK\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568cd2b0>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568c1160>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [], \'error_list\': [\'13134389992\', \'18675482617\', \'13113107626\', \'18675424447\', \'13109300002\', \'18604739534\', \'18537656611\', \'15683685117\', \'16604650469\', \'15534699993\', \'18508765897\', \'15641295278\', \'13235502116\', \'13235502116\', \'16673406656\', \'15696668939\', \'15678711368\', \'18571751813\', \'18627846612\', \'13112166722\', \'17623744881\', \'18565446410\', \'13290836038\', \'18671741787\', \'13260551108\', \'17673657133\', \'15513118323\', \'17635767117\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568da828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568da7b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:15:14,151] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'9Or0PLpHVdx9NJnHM1A9P6EfV3G5LkE9kxYhOTshaH5M8TCKfBmlhz6JVbPVtxpK\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568cd2b0>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568c1160>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [], \'error_list\': [\'13134389992\', \'18675482617\', \'13113107626\', \'18675424447\', \'13109300002\', \'18604739534\', \'18537656611\', \'15683685117\', \'16604650469\', \'15534699993\', \'18508765897\', \'15641295278\', \'13235502116\', \'13235502116\', \'16673406656\', \'15696668939\', \'15678711368\', \'18571751813\', \'18627846612\', \'13112166722\', \'17623744881\', \'18565446410\', \'13290836038\', \'18671741787\', \'13260551108\', \'17673657133\', \'15513118323\', \'17635767117\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568da828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568da7b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:19:14,338] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'x7PWb0GhUHvKVBa7OPRs9x3JF7lYo5bXIQmda8JR9b3ngLpahpDEB0vdFfuO6iWy\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5680e908>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568199b0>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:19:14,340] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'x7PWb0GhUHvKVBa7OPRs9x3JF7lYo5bXIQmda8JR9b3ngLpahpDEB0vdFfuO6iWy\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5680e908>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568199b0>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:19:19,202] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'tYyq5SJ7aXdVl4FJjTyqAU72PTaYHAX3EH5H40MHprLyGeUMMtkC2nzwP1jOpNIE\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567b5f98>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56819cc0>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:19:19,204] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'tYyq5SJ7aXdVl4FJjTyqAU72PTaYHAX3EH5H40MHprLyGeUMMtkC2nzwP1jOpNIE\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567b5f98>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56819cc0>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:19:42,993] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'4Is5O1AyCf3KWXhX9s3lISCjVGItzTGafrZmN9D8RJBnh7w0C2Pxal4NVORjh6rL\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568dd320>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56846080>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:19:42,995] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'4Is5O1AyCf3KWXhX9s3lISCjVGItzTGafrZmN9D8RJBnh7w0C2Pxal4NVORjh6rL\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568dd320>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56846080>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:20:17,257] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'yk06ao3ZSg3RT4J764hqsC9bC17feO67Jqp84b89ZDAIVyL0Gj3vAYsuywPCYrry'>, 'request': <WSGIRequest: GET '/user/login'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f5b1a0158>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568aee48>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56925128>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-10-04 16:20:18,686] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'XcF2R4OHxI87pWWkNpQ81F9Et0Stmbje8VcjQcRhMcGKK6bngZCkt8B8t81j4o4P\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568327b8>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568320b8>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568da828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568da7b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:20:18,688] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'XcF2R4OHxI87pWWkNpQ81F9Et0Stmbje8VcjQcRhMcGKK6bngZCkt8B8t81j4o4P\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568327b8>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f568320b8>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568da828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568da7b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:20:22,574] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'msgSearch.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'P1VnEsJJDxteZADNXofoBZC2lUF2Rz970KsEDAMjS11RkKSQqY1A3s4wl2OSzMUI\'>, \'request\': <WSGIRequest: GET \'/major/searchiofo/1?searchWord=13134389992&searchCode=1102\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567c0128>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f567bdf98>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'pageobjs\': <Page 1 of 1>, \'pages\': range(1, 2), \'money_sum\': 0, \'typeobj\': <QuerySet []>, \'searchCode\': \'1102\', \'searchWord\': \'13134389992\', \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f56858940>, <TextNode: \'\\n                <form cl\'>, <django.template.defaulttags.URLNode object at 0x7f5f56858a20>, <TextNode: \'" method="get">\\n         \'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n\\n            </div>\\n    \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:20:32,928] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'AVBFvUhxiqpP0KEGpompRWWzEdsire8QLE8Wu2k7xUXslUTJSY8Bjpo3ElB89rTr\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5689e160>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5687da58>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568dc908>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568dca90>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:20:32,930] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'AVBFvUhxiqpP0KEGpompRWWzEdsire8QLE8Wu2k7xUXslUTJSY8Bjpo3ElB89rTr\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5689e160>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5687da58>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568dc908>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568dca90>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:20:39,049] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'5PeIUB85s8kSJTZ1tA8RPJqsQNZdqeKQgyLZTJbFHCSv43e4WaU3hcSWQV838rvr\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5686fcf8>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5684fa58>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f56900828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f569007b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:20:39,052] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'5PeIUB85s8kSJTZ1tA8RPJqsQNZdqeKQgyLZTJbFHCSv43e4WaU3hcSWQV838rvr\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5686fcf8>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5684fa58>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet []>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f56900828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f569007b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:20:44,653] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'msgSearch.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'ggOu3PEaagwCKiCHDXIgVo5pXhwAjwtQrZlL2XHKpK4f5sRK6xusnRxTXpFq1Jer\'>, \'request\': <WSGIRequest: GET \'/major/searchiofo/1?searchWord=13134389992&searchCode=1102\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5683a128>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56832748>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'pageobjs\': <Page 1 of 1>, \'pages\': range(1, 2), \'money_sum\': 0, \'typeobj\': <QuerySet []>, \'searchCode\': \'1102\', \'searchWord\': \'13134389992\', \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f56887278>, <TextNode: \'\\n                <form cl\'>, <django.template.defaulttags.URLNode object at 0x7f5f56887358>, <TextNode: \'" method="get">\\n         \'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n\\n            </div>\\n    \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:21:16,702] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'msgSearch.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'muT0surPqoPEF8q4C5vVrpfze0v6MMG3xdqhrCupFSnh0iF75Fh7TSH3e8EWuZrE\'>, \'request\': <WSGIRequest: GET \'/major/searchiofo/1?searchWord=13134389992&searchCode=1102\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567f57b8>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5686f4e0>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'pageobjs\': <Page 1 of 1>, \'pages\': range(1, 2), \'money_sum\': 0, \'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'searchCode\': \'1102\', \'searchWord\': \'13134389992\', \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568f0198>, <TextNode: \'\\n                <form cl\'>, <django.template.defaulttags.URLNode object at 0x7f5f568f0278>, <TextNode: \'" method="get">\\n         \'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n\\n            </div>\\n    \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:21:24,719] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'msgSearch.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'9rftEnd9kNhEGz7gBtRaUqfVNEMBMWLJkaMKDvgJzhPh1Jmj43DmmTHpNMVru9wk\'>, \'request\': <WSGIRequest: GET \'/major/searchiofo/1?searchWord=13134389992&searchCode=1102\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567c7390>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f567c0f28>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'pageobjs\': <Page 1 of 1>, \'pages\': range(1, 2), \'money_sum\': Decimal(\'99999999.99\'), \'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'searchCode\': \'1102\', \'searchWord\': \'13134389992\', \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f56858940>, <TextNode: \'\\n                <form cl\'>, <django.template.defaulttags.URLNode object at 0x7f5f56858a20>, <TextNode: \'" method="get">\\n         \'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n\\n            </div>\\n    \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:21:51,324] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'ZyILhlyve210Y1ireynIEx3Dobj5Layuahf2gtB5twzDjbxuH89U60v7ojsVtnj5\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568346d8>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56834ba8>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568dc908>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568dca90>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:21:51,326] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'ZyILhlyve210Y1ireynIEx3Dobj5Layuahf2gtB5twzDjbxuH89U60v7ojsVtnj5\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f568346d8>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56834ba8>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>, <Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568dc908>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568dca90>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:22:09,352] [base.py:152] [base:get_response] [WARNING]- Not Found: /
+[2019-10-04 16:22:16,236] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'JIap8nTxvIdwq0wjIILZj44cmhIb7876UrHG7vW7KcL9LaLmbixbLxwGmpR1PlSH\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567c0898>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f567bdfd0>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:22:16,238] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'JIap8nTxvIdwq0wjIILZj44cmhIb7876UrHG7vW7KcL9LaLmbixbLxwGmpR1PlSH\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567c0898>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f567bdfd0>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:22:35,761] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'errmsg' in template 'login.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'errmsg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [errmsg] in "[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: '1UHHizEL7Kh5DQCyZNMrJqk8zWMUlsfg5v4BHxBWjdQggcbikxFCKNf9ervooJ89'>, 'request': <WSGIRequest: GET '/user/login?next=/major/batchHandle'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x7f5f5b194e18>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5683a6a0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5689b0f0>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}]"
+[2019-10-04 16:22:36,131] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'zgwVnUIzOsSNdOd512zfphkUmvzmztNZKZ3cm2L93WqqyYs8uClrRKMomDIchGyA\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5683a4e0>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5683a908>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568da828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568da7b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:22:36,133] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'zgwVnUIzOsSNdOd512zfphkUmvzmztNZKZ3cm2L93WqqyYs8uClrRKMomDIchGyA\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5683a4e0>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5683a908>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568da828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568da7b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:23:40,342] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'k5VjhgZHhNU1rQzHUcbasp4kQyiKkvKRvOsAgo2hwhsEM0OKnMXmUSwOQGrA2Ivs\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5683af98>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5683a198>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568da828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568da7b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:23:40,344] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'k5VjhgZHhNU1rQzHUcbasp4kQyiKkvKRvOsAgo2hwhsEM0OKnMXmUSwOQGrA2Ivs\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5683af98>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5683a198>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568da828>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568da7b8>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:24:09,075] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'Dqr3JzQ1Dh75A5JcuutQwftJz6wrxefFQ3YklNBFNZDdh4ihLesG0l3wPtfN2wwm\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567c0e48>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f567b56d8>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:24:09,077] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'Dqr3JzQ1Dh75A5JcuutQwftJz6wrxefFQ3YklNBFNZDdh4ihLesG0l3wPtfN2wwm\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567c0e48>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f567b56d8>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:24:14,624] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'xLg4ZlyW88XKOmn0B2WLztXQndj96sy0KoNlBzjAiQtSvlW5SMVB3zxDDA2vBKPH\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567cb358>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56807630>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [], \'error_list\': [\'13002320060\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:24:14,627] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'xLg4ZlyW88XKOmn0B2WLztXQndj96sy0KoNlBzjAiQtSvlW5SMVB3zxDDA2vBKPH\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f567cb358>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56807630>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [], \'error_list\': [\'13002320060\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f567f8e10>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f567f8da0>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:24:20,203] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'msgSearch.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'W33bMhrQZQsLQFJgxcwZv0Yy697v1EP09GAsovcu9yYTxEilOWvPZ6ylmwQRwW6H\'>, \'request\': <WSGIRequest: GET \'/major/searchiofo/1?searchWord=13113107626&searchCode=1102\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f5683d048>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f5683dba8>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'pageobjs\': <Page 1 of 1>, \'pages\': range(1, 2), \'money_sum\': 0, \'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'searchCode\': \'1102\', \'searchWord\': \'13113107626\', \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\']}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f56887278>, <TextNode: \'\\n                <form cl\'>, <django.template.defaulttags.URLNode object at 0x7f5f56887358>, <TextNode: \'" method="get">\\n         \'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n\\n            </div>\\n    \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:25:09,970] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'msg' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'msg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [msg] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'hMbeW7jhKGqw36dLZUSMxQoY32RQRQ1vupIvyl4VUoWEK5MQgERC1WYLjpAcm8ic\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56869128>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56862c50>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568dc908>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568dca90>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'
+[2019-10-04 16:25:09,973] [base.py:925] [base:_resolve_lookup] [DEBUG]- Exception while resolving variable 'pageobjs' in template 'batchHandler.html'.
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 882, in _resolve_lookup
+    current = current[bit]
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/context.py", line 87, in __getitem__
+    raise KeyError(key)
+KeyError: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 888, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'pageobjs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/.virtualenvs/payout/lib/python3.6/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [pageobjs] in '[{\'True\': True, \'False\': False, \'None\': None}, {\'csrf_token\': <SimpleLazyObject: \'hMbeW7jhKGqw36dLZUSMxQoY32RQRQ1vupIvyl4VUoWEK5MQgERC1WYLjpAcm8ic\'>, \'request\': <WSGIRequest: POST \'/major/batchSearch\'>, \'user\': <SimpleLazyObject: <User: admin>>, \'perms\': <django.contrib.auth.context_processors.PermWrapper object at 0x7f5f56869128>, \'messages\': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x7f5f56862c50>, \'DEFAULT_MESSAGE_LEVELS\': {\'DEBUG\': 10, \'INFO\': 20, \'SUCCESS\': 25, \'WARNING\': 30, \'ERROR\': 40}}, {}, {\'typeobj\': <QuerySet [<LotteryClass: LotteryClass object>, <LotteryClass: LotteryClass object>]>, \'pms\': [\'管理员模块\', \'信息管理\', \'信息查询\', \'上传数据包\'], \'query_obj_list\': [<Record: Record object>], \'error_list\': []}, {\'block\': <Block Node: body. Contents: [<TextNode: \'\\n    <div class="content"\'>, <django.template.defaulttags.URLNode object at 0x7f5f568dc908>, <TextNode: \'" method="post">\\n        \'>, <django.template.defaulttags.CsrfTokenNode object at 0x7f5f568dca90>, <TextNode: \'\\n                    <div\'>, <TextNode: \'\\n                        \'>, <Variable Node: msg>, <TextNode: \'</h3>\\n                   \'>, <IfNode>, <TextNode: \'\\n            </div>\\n     \'>, <TextNode: \'\\n        <div class="moda\'>, <For Node: for foo in typeobj, tail_len: 5>, <TextNode: \'\\n                        \'>]>}]'

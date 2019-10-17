@@ -1,0 +1,229 @@
+﻿{% extends 'base.html' %}
+{% block side %}
+    <div class="sidebar" data-background-color="" data-active-color="danger">
+        <div class="logo">
+            <a href="{% url 'major:index' %}" class="simple-text">
+                管 理 平 台
+            </a>
+        </div>
+        <div class="logo logo-mini"><a href="#" class="simple-text">C</a></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav first-nav">
+                <li class="active">
+                    <a href="{% url 'major:index' %}">
+                        <i class="ti-panel"></i>
+                        <p>我的首页</p>
+                    </a>
+                </li>
+
+                {% if '管理员模块' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#charts" class="collapsed" aria-expanded="false">
+                        <i class="ti-bar-chart-alt"></i>
+                        <p>管理员管理
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="charts" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'userapp:mdfuser' 1 %}">修改管理员</a></li>
+                            <li><a href="{% url 'userapp:adduser' 1 %}">增加管理员</a></li>
+                            <li><a href="{% url 'userapp:loginrec' 1 %}">登录记录</a></li>
+                            <li><a href="{% url 'userapp:group' 1 %}">权限组管理</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '信息查询' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#ui-elements" class="collapsed" aria-expanded="false">
+                        <i class="ti-package"></i>
+                        <p>信息查询
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="ui-elements" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'major:search' %}">查询信息</a></li>
+                            <li><a href="{% url 'major:batchHandle' %}">批量处理</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '上传数据包' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#forms" class="collapsed" aria-expanded="false">
+                        <i class="ti-clipboard"></i>
+                        <p>上传数据包
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="forms" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'major:uploadData' %}">上传数据</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if '信息管理' in pms %}
+                <li>
+                    <a data-toggle="collapse" href="#tables" class="collapsed" aria-expanded="false">
+                        <i class="ti-view-list-alt"></i>
+                        <p>信息管理
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="tables" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <ul class="nav">
+                            <li><a href="{% url 'major:typemanage' 1 %}">彩金类型管理</a></li>
+                            <li><a href="{% url 'userapp:adulog' %}">管理员派发记录</a></li>
+                            <li><a href="{% url 'major:downloadinfo' %}">下载信息</a></li>
+                            <li><a href="{% url 'major:uploadrecord' 1 %}">上传记录</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+{% endblock side %}
+{% block body %}
+    <div class="content">
+            <div class="container-fluid">
+                <div id="adulog" class="row wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <em class="updatepw_icon"></em>
+                                        管理员记录
+                                    </div>
+                                </div>
+
+                                <form action="{% url 'userapp:adulogsearch' 1%}" method="get">
+
+                                <div class="panel-body">
+                                    <div class="content-box form-ajax form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                信息开始时间：
+                                            </label>
+                                            <div class="col-md-9 c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day">
+                                                <input type="text" name="startTime" id="startTime" class="form-control" maxlength="20" required="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                信息结束时间：
+                                            </label>
+                                            <div class="col-md-9 c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day">
+                                                <input type="text" name="endTime" id="endTime" class="form-control" maxlength="20" required="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                               管理员：
+                                            </label>
+                                            <div class="col-md-9">
+                                                <select id="BankCode" name="username" class="form-control">
+                                                    <option value="0">全部</option>
+                                                    {% for obj in userobjs %}
+                                                    <option value="{{ obj.username }}">{{ obj.username }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-5 col-md-4">
+                                                <button type="submit" class="btn subBtnstl" id="btnUpdateLoginPWD"> &nbsp;查 &nbsp; &nbsp;询&nbsp;</button>
+                                            </div>
+                                        </div>
+                                        <h3 style="color: #dd4b39">{{ msg }}</h3>
+                                    </div>
+                                </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if status %}
+
+                    <div class="row tablelist">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <em class="list_icon"></em>
+                                        记录列表
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>上传时间</th>
+                                                    <th>姓名</th>
+                                                    <th>派送彩金</th>
+                                                    <th>QQ</th>
+                                                    <th>电话号码</th>
+                                                    <th>电子邮箱</th>
+                                                    <th>派送时间</th>
+                                                    <th>操作人</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for obj in pageobjs %}
+                                                <tr>
+                                                    <td>{{ obj.create_time }}</td>
+                                                    <td>{{ obj.name }}</td>
+                                                    <td>{{ obj.money }}</td>
+                                                    <td>{{ obj.qq }}</td>
+                                                    <td>{{ obj.tel }}</td>
+                                                    <td>{{ obj.email }}</td>
+                                                    <td>{{ obj.send_time }}</td>
+                                                    <td>{{ obj.operator }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="span12" id="dPager">
+                                        <div class="pager">
+                                            <ul>
+
+                                                {% if pageobjs.has_previous %}
+                                                <li><a class="prev" href="{% url 'major:adulog' pageobjs.previous_page_number%} ?startTime={{ startTime }}&endTime={{ endTime }}&username={{ username }}">上一页</a></li>
+                                                {% endif %}
+
+                                                {% for pindex in pages %}
+                                                    {% if pindex == pageobjs.number %}
+                                                    <li><span class="current">{{ pindex }}</span></li>
+                                                    {% else %}
+                                                    <li><a href="{% url 'major:adulog' pindex %}?startTime={{ startTime }}&endTime={{ endTime }}&username={{ username }}">{{ pindex }}</a></li>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if pageobjs.has_next %}
+                                                <li><a class="next" href="{% url 'major:adulog' pindex %}?startTime={{ startTime }}&endTime={{ endTime }}&username={{ username }}">下一页</a></li>
+                                                {% endif %}
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock body %}
+
